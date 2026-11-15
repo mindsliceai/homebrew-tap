@@ -1,0 +1,40 @@
+name: Test formula
+
+on:
+  pull_request:
+    paths:
+      - "Formula/mindslice.rb"
+  push:
+    branches:
+      - main
+    paths:
+      - "Formula/mindslice.rb"
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit, install, and test formula
+        run: |
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          fi
+          brew tap-new --no-git mindsliceai/tap
+          tap_path="$(brew --repository mindsliceai/tap)"
+          mkdir -p "$tap_path/Formula"
+          cp Formula/mindslice.rb "$tap_path/Formula/mindslice.rb"
+          brew trust --formula mindsliceai/tap/mindslice
+          brew audit --strict mindsliceai/tap/mindslice
+          brew install mindsliceai/tap/mindslice
+          brew test mindsliceai/tap/mindslice
+          mindslice --help
+          brew uninstall --force mindsliceai/tap/mindslice
