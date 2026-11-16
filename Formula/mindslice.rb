@@ -1,28 +1,28 @@
 class Mindslice < Formula
   desc "CLI and local service for Mindslice"
   homepage "https://github.com/mindsliceai/mindslice-releases"
-  url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.1/mindslice-cli_darwin_arm64.tar.gz"
-  sha256 "206e475093ee8ec42501cb0c9bfcf97f63d0fc3d675219354bde72d872734d00"
+  url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.3/mindslice-cli_darwin_arm64.tar.gz"
+  sha256 "208062fa4b34b95fbd3484eff99b73af35f7f2bee0e3e78dfad9a66980ce0d55"
 
   on_macos do
     on_intel do
-      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.1/mindslice-cli_darwin_amd64.tar.gz"
-      sha256 "6c8260fe036dd099905764ec8082522d3d05e8185d622e50fb2d65d17d7e7059"
+      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.3/mindslice-cli_darwin_amd64.tar.gz"
+      sha256 "f55750b6717b9f47efcdfb8c7dea885623383540715fcc784b60a7efa30dac29"
     end
     on_arm do
-      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.1/mindslice-cli_darwin_arm64.tar.gz"
-      sha256 "206e475093ee8ec42501cb0c9bfcf97f63d0fc3d675219354bde72d872734d00"
+      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.3/mindslice-cli_darwin_arm64.tar.gz"
+      sha256 "208062fa4b34b95fbd3484eff99b73af35f7f2bee0e3e78dfad9a66980ce0d55"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.1/mindslice-cli_linux_amd64.tar.gz"
-      sha256 "adb2ecaaf9e94900a52328420c428e47c89ceb92647af42b6d0bfe82c6d261fe"
+      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.3/mindslice-cli_linux_amd64.tar.gz"
+      sha256 "435438cd81c3bcee6d86b3e57863703b16202bd748c0917273a8c83a2126bc49"
     end
     on_arm do
-      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.1/mindslice-cli_linux_arm64.tar.gz"
-      sha256 "c4df3f80b171946bb885e88c4f058afec6ad301043a6171aedf0645b7da1e10b"
+      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.3/mindslice-cli_linux_arm64.tar.gz"
+      sha256 "46a9bc4b3f4e33ec12e684973bf8add400c39b661321c7c64d8edeac7ec7d5ee"
     end
   end
 
