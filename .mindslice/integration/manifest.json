@@ -1,7 +1,7 @@
 {
   "version": "1",
   "files": {
-    ".claude/skills/mindslice-knowledge/SKILL.md": "f12cc9e39e503534d438e05055f5650bd4fb3b42956a2e24f6546f2ff1338f10",
+    ".claude/skills/mindslice-knowledge/SKILL.md": "e3a13b65dd332da81cf605551a9648c9eb64d867283a11d369ff7396e0b724ba",
     ".claude/skills/mindslice-knowledge/templates/README.md": "f3669e2421f06e0e3ec41be1e7d63b67495df43719cdaccca274d6b92a419920",
     ".claude/skills/mindslice-knowledge/templates/architecture.md": "d5a56ce9fdb5b85df253186e1155b9c18f4eaac0b09f3f741e7cd919bd35a05f",
     ".claude/skills/mindslice-knowledge/templates/decision.md": "e9e7fa8f9522152100fdeb30d4bd746fe78eb16fec6527868a4ea40bbb2cf617",

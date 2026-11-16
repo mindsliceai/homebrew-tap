@@ -41,6 +41,56 @@ of this workflow. Setup, registration changes, cleanup and service shutdown are
 not routine knowledge maintenance; do not run them without a separate request.
 Command guidance does not bypass the agent's tool approvals.
 
+## Gather documentation and implementation context
+
+Before choosing an implementation, combine selected homebase documentation with
+source evidence from the connected projects. Survey all manifest projects and
+search relevant pages for references, including `sources:` project IDs and
+repository-relative paths, domain/system indexes, architecture and contracts.
+Do not assume this application owns every part of a feature or that missing
+references make another project irrelevant.
+
+Run these commands from this application repository or a descendant:
+
+```sh
+mindslice status --json
+mindslice projects list --json
+mindslice projects resolve --json
+```
+
+List enumerates all projects in the inferred homebase's manifest without scanning;
+resolve locates all of them when `--project-id` is omitted. These commands work
+from application projects as well as homebases. With multiple connected homebases,
+repeat both commands with `--hb <homebase-id>` for every homebase reported by
+status. Outside either repository, pass `--directory <application-directory>`
+or an explicit `--hb <homebase-id>`. The local service and registered homebase
+working copy are required; follow the startup guidance above if necessary.
+
+For focused lookup or recovery, use:
+
+```sh
+mindslice projects list --hb <homebase-id> --json
+mindslice projects resolve --hb <homebase-id> --project-id <project-id> --json
+mindslice projects resolve --hb <homebase-id> --project-id <project-id> --path /absolute/application/path --json
+mindslice projects resolve --hb <homebase-id> --project-id <project-id> --not-present --json
+mindslice projects resolve --hb <homebase-id> --project-id <project-id> --rescan --json
+```
+
+Inspect status, paths, search roots, completeness and issues, even for resolved
+results. Ask which checkout to use for ambiguous matches, or for an absolute path
+or approval to mark an unavailable project absent for this service session.
+JSON never prompts; resolve exits nonzero if any requested project is unresolved
+or absent. Discovery only caches locations for this service session: it does not
+register connections, clone repositories, change selection or grant filesystem
+access. Do not initialize or connect missing repositories without a separate request.
+
+With permitted access, read each relevant project's own instructions and follow
+documentation references into its implementation, interfaces and tests. Compare
+code with documented intent, identify cross-project dependencies, and narrow
+deeper investigation to the task. Report inaccessible projects, stale references,
+contradictions and incomplete evidence instead of claiming full context.
+Keep homebase reads within the selected-knowledge workflow below.
+
 ## Read and search through the service
 
 Run commands from the project directory or any descendant; the nearest registered
