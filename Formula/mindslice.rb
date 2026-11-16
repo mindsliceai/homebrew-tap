@@ -4,8 +4,6 @@ class Mindslice < Formula
   url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.1/mindslice-cli_darwin_arm64.tar.gz"
   sha256 "206e475093ee8ec42501cb0c9bfcf97f63d0fc3d675219354bde72d872734d00"
 
-  depends_on "git"
-
   on_macos do
     on_intel do
       url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.1.1/mindslice-cli_darwin_amd64.tar.gz"
