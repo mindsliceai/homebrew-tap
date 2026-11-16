@@ -35,7 +35,7 @@ class Mindslice < Formula
     keep_alive successful_exit: false
     throttle_interval 10
     restart_delay 10
-    environment_variables PATH: std_service_path_env,
+    environment_variables PATH:            std_service_path_env,
                           XDG_CONFIG_HOME: ENV.fetch("XDG_CONFIG_HOME", "#{Dir.home}/.config")
     log_path var/"log/mindslice.log"
     error_log_path var/"log/mindslice.log"
