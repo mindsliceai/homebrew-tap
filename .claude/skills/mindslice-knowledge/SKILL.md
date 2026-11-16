@@ -6,13 +6,13 @@ description: Read, populate, refresh, and maintain shared Mindslice knowledge wh
 # Mindslice knowledge
 
 Before changing application behavior, run `mindslice status` and identify this
-checkout's connection, knowledge-base views, and their health. Prefer the
+checkout's connection, homebase views, and their health. Prefer the
 read-only service commands below to discover and read selected knowledge,
 rather than reading links outside the application repository. Report unavailable
 context or sources; do not broaden selection or claim an incomplete review is complete.
 This skill is installed in this application repository; its page templates are
 in `.claude/skills/mindslice-knowledge/templates/`. Use them as starting points
-for pages in the connected canonical knowledge base, not as application docs.
+for pages in the connected canonical homebase, not as application docs.
 Do not create a full set of pages or edit the generated context view.
 
 ## Service and command reference
@@ -21,7 +21,7 @@ Use this reference for routine knowledge work instead of invoking help.
 Flags must precede positional arguments. Angle-bracket values are placeholders.
 
 - `mindslice status [--json]`: list connections, project directories,
-  knowledge-base IDs and view health. Use the connection ID for writes and refresh,
+  homebase IDs and view health. Use the connection ID for writes and refresh,
   not the manifest's project ID.
 - If status fails because the local service is not running, run
   `mindslice service start`, then rerun `mindslice status` to verify readiness.
@@ -30,7 +30,7 @@ Flags must precede positional arguments. Angle-bracket values are placeholders.
   reset state, stop another service or bypass permissions.
 - `mindslice refresh <projectConnectionId>`: regenerate managed context after
   a source change; does not change project selection.
-- `mindslice reader [--project <directory>] [--kb <knowledge-base-id>]`:
+- `mindslice reader [--project <directory>] [--hb <homebase-id>]`:
   open a read-only browser session when requested; keep its launch URL private.
 - `mindslice integration update [project-path]`: preview and confirm updated
   skill/instructions/templates in an existing integration. Only run when requested;
@@ -45,7 +45,7 @@ Command guidance does not bypass the agent's tool approvals.
 
 Run commands from the project directory or any descendant; the nearest registered
 project is used. Outside it, pass `--project <directory>`. With multiple connected
-knowledge bases, pass `--kb <knowledge-base-id>`. Flags precede positional arguments.
+homebases, pass `--hb <homebase-id>`. Flags precede positional arguments.
 
 ```sh
 mindslice knowledge tree
@@ -71,8 +71,8 @@ file, not just the returned range. All three commands support `--json`.
 | `knowledge read <relative-markdown-path>` | `--start-line 1 --end-line <last-line>` (1-based, inclusive; default 200 lines, maximum 1000). |
 
 Prefix each command with `mindslice`; all accept
-`--project <directory> --kb <knowledge-base-id> --json` as described above.
-Paths are knowledge-base-relative, clean paths without a trailing slash.
+`--project <directory> --hb <homebase-id> --json` as described above.
+Paths are homebase-relative, clean paths without a trailing slash.
 
 These commands require an up-to-date running local service and registered canonical
 working copy, but do not require a healthy generated view. They expose only the
@@ -80,7 +80,7 @@ current project's selected Markdown and reject unsafe paths. Files above 256 KiB
 or invalid UTF-8 are reported as errors, not silently skipped.
 If the service is unavailable, follow the startup steps above and report any
 remaining failure; use an accessible generated view under
-`.mindslice/context/<knowledge-base-id>/` only when permitted.
+`.mindslice/context/<homebase-id>/` only when permitted.
 Never use unrestricted filesystem reads to bypass a denied command or selection.
 
 A user may approve the `mindslice knowledge` command group in their agent's
@@ -92,7 +92,7 @@ not grant permissions or configure approval rules.
 
 A domain can describe a product or capability and span repositories; a project
 ID is an application repository, not a domain. Start with the domain index
-and its page map. Follow applicable knowledge-base conventions available through
+and its page map. Follow applicable homebase conventions available through
 the current access workflow. Report missing indexes, conventions, links and
 sources rather than expanding selection or bypassing access safeguards.
 These recommendations are a fallback, not mandatory paths or permission to
@@ -124,7 +124,7 @@ claims. Do not claim a complete source check when evidence is unavailable.
 ### Templates and review metadata
 
 Use only the matching bundled page template for approved pages in the canonical
-knowledge base. Adapt headings, replace placeholders with evidence or specific
+homebase. Adapt headings, replace placeholders with evidence or specific
 open questions, and remove irrelevant prompts. Never leave a template prompt as
 if it were verified knowledge. Templates are scaffolds, not required paths.
 
@@ -152,17 +152,17 @@ unrelated frontmatter, and legacy metadata; do not automatically convert it.
 
 Check that root and domain indexes link to existing pages, pages link back to
 relevant domains and systems, and scopes do not duplicate one another. Prefer
-links over copied explanations. A maintainer can run `mindslice kb-check` on the
+links over copied explanations. A maintainer can run `mindslice hb-check` on the
 canonical checkout. Report its warnings and limits: structural checks do not
 prove factual accuracy, complete evidence, Mermaid rendering, or human review.
-Do not run scripts from the knowledge base.
+Do not run scripts from the homebase.
 
 ## Visual explanations
 
 Actively consider a diagram when creating or substantially updating documentation.
 Prefer Mermaid in fenced Markdown blocks when it clarifies flows, relationships,
 boundaries, or state changes better than prose alone. Follow existing
-knowledge-base conventions; omit diagrams when text or a table is clearer.
+homebase conventions; omit diagrams when text or a table is clearer.
 
 - Use flowcharts for workflows, decisions, dependencies, and system boundaries.
 - Use sequence diagrams for interactions between actors or applications,
@@ -186,7 +186,7 @@ documentation to external rendering services.
 
 ## Preservation and reporting
 
-Knowledge-base project rules select relevant Markdown context; they are not
+Homebase project rules select relevant Markdown context; they are not
 authorization boundaries. Do not change project selection or overwrite another
 project's rule without explicit maintainer approval. Never add credentials,
 secret values, personal data or unsupported claims.
@@ -227,15 +227,15 @@ after substantive agent edits. Only a human marks a page verified.
 ```sh
 mindslice history --limit 20 --path domains/example/README.md
 mindslice history show <full-commit-hash>
-mindslice kb-check --source <project-id>=<application-directory> <canonical-knowledge-base-directory>
+mindslice hb-check --source <project-id>=<application-directory> <canonical-homebase-directory>
 ```
 
 History is read-only committed-state analysis, not pending automatic-history
-status. Both history commands accept `--project <directory> --kb <knowledge-base-id> --json`.
+status. Both history commands accept `--project <directory> --hb <homebase-id> --json`.
 The list accepts `--limit <1-100>` (default 20) and optional `--path <relative-path>`;
 omit the path to list all commits. Show takes a full commit hash and no list flags.
 
-`kb-check [--strict] [--source <project-id>=<directory>] [knowledge-base-path]`
+`hb-check [--strict] [--source <project-id>=<directory>] [homebase-path]`
 checks structure without writing or requiring the service. The path defaults
 to the current directory; repeat `--source` for available source checkouts.
 It requires access to the canonical Git working copy; do not use it to bypass
@@ -245,7 +245,7 @@ selection. `--strict` fails on warnings, not unavailable evidence.
 
 Only write within the user's approved documentation scope.
 The view may contain links or managed copies. Never edit a managed copy.
-Prefer `mindslice change` with the project connection ID, knowledge-base ID,
+Prefer `mindslice change` with the project connection ID, homebase ID,
 selected Markdown path, operation and summary. For create or replace, prefer
 `--content-stdin` with redirected or piped complete UTF-8 content (up to 256 KiB);
 use `--content-file` when a file is needed. The options cannot be combined.
@@ -256,9 +256,9 @@ sha256 from `mindslice knowledge read --json <path>` and pass
 Complete command forms (flags precede the connection ID):
 
 ```sh
-mindslice change --kb <knowledge-base-id> --path <relative-markdown-path> --operation create --content-stdin --summary "Reason for creation" <projectConnectionId> < <complete-content-file>
-mindslice change --kb <knowledge-base-id> --path <relative-markdown-path> --operation replace --expected-sha256 <current-hash> --content-stdin --summary "Reason for replacement" <projectConnectionId> < <complete-content-file>
-mindslice change --kb <knowledge-base-id> --path <relative-markdown-path> --operation delete --expected-sha256 <current-hash> --summary "Reason for deletion" <projectConnectionId>
+mindslice change --hb <homebase-id> --path <relative-markdown-path> --operation create --content-stdin --summary "Reason for creation" <projectConnectionId> < <complete-content-file>
+mindslice change --hb <homebase-id> --path <relative-markdown-path> --operation replace --expected-sha256 <current-hash> --content-stdin --summary "Reason for replacement" <projectConnectionId> < <complete-content-file>
+mindslice change --hb <homebase-id> --path <relative-markdown-path> --operation delete --expected-sha256 <current-hash> --summary "Reason for deletion" <projectConnectionId>
 ```
 
 The redirection shown is POSIX shell syntax; use your shell's UTF-8 pipe or

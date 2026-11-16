@@ -1,12 +1,12 @@
 # Knowledge page templates
 
 These are starting points for pages in the connected, canonical Mindslice
-knowledge base. They are installed with the `mindslice-knowledge` skill in the
+homebase. They are installed with the `mindslice-knowledge` skill in the
 application repository so the agent can use them while reviewing that
 application's source code.
 
 Do not copy this entire set automatically. First agree on the domain scope and
-page map, then create only the approved pages in the knowledge-base repository.
+page map, then create only the approved pages in the homebase repository.
 A domain can span several application repositories; organize around domain
 features and system responsibilities rather than mirroring one repository's
 folders.

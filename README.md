@@ -24,7 +24,7 @@ Run this from any directory:
 mindslice service start
 ```
 
-The service manages your knowledge-base and project connections and keeps local
+The service manages your homebase and project connections and keeps local
 context views up to date. It runs in the background, even after you close the
 terminal. Start it before using the setup commands below; stop it when needed
 with `mindslice service stop`.
@@ -42,22 +42,22 @@ URL to clone. The prompts ask where the knowledge lives and guide you through
 any initialization or cloning. Use an absolute folder path if you are unsure;
 relative paths are resolved from your current directory.
 
-This registers the knowledge base on your machine, not a particular application
+This registers the homebase on your machine, not a particular application
 project. Keep it in its own folder, separate from your application code, so
 multiple projects can use the same knowledge. You only need to connect each
-knowledge base once per machine.
+homebase once per machine.
 
 ### 3. Set up your project
 
 Change to the root of the application repository where you work with your
-coding agent, **not** the knowledge-base folder:
+coding agent, **not** the homebase folder:
 
 ```sh
 cd /path/to/your-project
 mindslice init .
 ```
 
-The `.` means the current directory. Choose which connected knowledge bases
+The `.` means the current directory. Choose which connected homebases
 this project should use, review the project setup, and follow the prompts for
 which knowledge to include. You can also install optional agent instructions,
 skills, and reminder hooks.
