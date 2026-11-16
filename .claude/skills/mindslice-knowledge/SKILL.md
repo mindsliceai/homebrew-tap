@@ -15,6 +15,32 @@ in `.claude/skills/mindslice-knowledge/templates/`. Use them as starting points
 for pages in the connected canonical knowledge base, not as application docs.
 Do not create a full set of pages or edit the generated context view.
 
+## Service and command reference
+
+Use this reference for routine knowledge work instead of invoking help.
+Flags must precede positional arguments. Angle-bracket values are placeholders.
+
+- `mindslice status [--json]`: list connections, project directories,
+  knowledge-base IDs and view health. Use the connection ID for writes and refresh,
+  not the manifest's project ID.
+- If status fails because the local service is not running, run
+  `mindslice service start`, then rerun `mindslice status` to verify readiness.
+  Do not treat permission, registration or other errors as a stopped service.
+  If the executable is missing or startup fails, report the error; do not install,
+  reset state, stop another service or bypass permissions.
+- `mindslice refresh <projectConnectionId>`: regenerate managed context after
+  a source change; does not change project selection.
+- `mindslice reader [--project <directory>] [--kb <knowledge-base-id>]`:
+  open a read-only browser session when requested; keep its launch URL private.
+- `mindslice integration update [project-path]`: preview and confirm updated
+  skill/instructions/templates in an existing integration. Only run when requested;
+  preserve modified files for manual reconciliation.
+
+The read, history, validation and approved-write commands below cover the rest
+of this workflow. Setup, registration changes, cleanup and service shutdown are
+not routine knowledge maintenance; do not run them without a separate request.
+Command guidance does not bypass the agent's tool approvals.
+
 ## Read and search through the service
 
 Run commands from the project directory or any descendant; the nearest registered
@@ -38,11 +64,22 @@ Read defaults to 200 lines (at most 1000 per request); follow the continuation
 hint, or inspect totalLines and truncated in JSON. The SHA-256 covers the entire
 file, not just the returned range. All three commands support `--json`.
 
+| Command | Additional flags and defaults |
+| --- | --- |
+| `knowledge tree` | `--path <relative-file-or-directory>` (all selected paths by default), `--offset 0 --limit 200` (maximum 1000). |
+| `knowledge search <literal>` | `--path <relative-file-or-directory>`, `--offset 0 --limit 50` (maximum 200), `--case-sensitive` (off by default). |
+| `knowledge read <relative-markdown-path>` | `--start-line 1 --end-line <last-line>` (1-based, inclusive; default 200 lines, maximum 1000). |
+
+Prefix each command with `mindslice`; all accept
+`--project <directory> --kb <knowledge-base-id> --json` as described above.
+Paths are knowledge-base-relative, clean paths without a trailing slash.
+
 These commands require an up-to-date running local service and registered canonical
 working copy, but do not require a healthy generated view. They expose only the
 current project's selected Markdown and reject unsafe paths. Files above 256 KiB
 or invalid UTF-8 are reported as errors, not silently skipped.
-If the service is unavailable, report it; use an accessible generated view under
+If the service is unavailable, follow the startup steps above and report any
+remaining failure; use an accessible generated view under
 `.mindslice/context/<knowledge-base-id>/` only when permitted.
 Never use unrestricted filesystem reads to bypass a denied command or selection.
 
@@ -166,6 +203,18 @@ the bundled page map and templates.
 
 ## After application changes
 
+Present a few concise bullets describing the changes actually made. Then ask
+whether the user wants to investigate and potentially update shared documentation.
+Wait for explicit approval before starting that
+post-change investigation or editing knowledge pages. Do not treat an application
+change, a reminder hook, or this skill as consent. If the user declines or has
+not answered, leave shared documentation unchanged and report it as deferred.
+A user request explicitly including documentation investigation and updates
+already grants consent for that scope; do not ask again for work already requested.
+Reading relevant knowledge before coding remains required and is not this
+optional post-change investigation.
+
+Only after approval, follow this workflow:
 Use source references and domain context to find potentially affected pages;
 missing references do not prove no page needs updating. Update behavior,
 contracts, decisions and pitfalls as appropriate, or explain why no update
@@ -173,8 +222,28 @@ is needed. Update source-check dates only when all required sources were
 checked. Preserve human-review dates and change human-verified pages to draft
 after substantive agent edits. Only a human marks a page verified.
 
+## History and structural validation
+
+```sh
+mindslice history --limit 20 --path domains/example/README.md
+mindslice history show <full-commit-hash>
+mindslice kb-check --source <project-id>=<application-directory> <canonical-knowledge-base-directory>
+```
+
+History is read-only committed-state analysis, not pending automatic-history
+status. Both history commands accept `--project <directory> --kb <knowledge-base-id> --json`.
+The list accepts `--limit <1-100>` (default 20) and optional `--path <relative-path>`;
+omit the path to list all commits. Show takes a full commit hash and no list flags.
+
+`kb-check [--strict] [--source <project-id>=<directory>] [knowledge-base-path]`
+checks structure without writing or requiring the service. The path defaults
+to the current directory; repeat `--source` for available source checkouts.
+It requires access to the canonical Git working copy; do not use it to bypass
+selection. `--strict` fails on warnings, not unavailable evidence.
+
 ## Write safely
 
+Only write within the user's approved documentation scope.
 The view may contain links or managed copies. Never edit a managed copy.
 Prefer `mindslice change` with the project connection ID, knowledge-base ID,
 selected Markdown path, operation and summary. For create or replace, prefer
@@ -184,9 +253,24 @@ Do not pass content for delete. Use the whole-file
 sha256 from `mindslice knowledge read --json <path>` and pass
 `--expected-sha256` for replace or delete; create must not exist.
 `mindslice hash <view-file>` remains available when the view is accessible.
-See `mindslice change --help`. A write through
+Complete command forms (flags precede the connection ID):
+
+```sh
+mindslice change --kb <knowledge-base-id> --path <relative-markdown-path> --operation create --content-stdin --summary "Reason for creation" <projectConnectionId> < <complete-content-file>
+mindslice change --kb <knowledge-base-id> --path <relative-markdown-path> --operation replace --expected-sha256 <current-hash> --content-stdin --summary "Reason for replacement" <projectConnectionId> < <complete-content-file>
+mindslice change --kb <knowledge-base-id> --path <relative-markdown-path> --operation delete --expected-sha256 <current-hash> --summary "Reason for deletion" <projectConnectionId>
+```
+
+The redirection shown is POSIX shell syntax; use your shell's UTF-8 pipe or
+redirection equivalent. Replace `--content-stdin` and its redirection with
+`--content-file <complete-content-file>` for file-based input. These are all
+change flags; there is no `--project` or `--json` flag for change.
+Each request writes one complete page, not a patch. A write through
 an existing link can edit the canonical repository but bypasses service
 validation; replacement, rename and deletion require the service or canonical
 path. On conflict, reread and decide; do not blindly retry.
 
 Application and knowledge are separate Git repositories.
+Service-submitted writes may be automatically committed locally after a quiet
+period; approval to write includes this service behavior, not permission to push.
+Report write success separately from pending or blocked automatic history.

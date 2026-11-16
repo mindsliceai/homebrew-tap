@@ -1,7 +1,7 @@
 {
   "version": "1",
   "files": {
-    ".claude/skills/mindslice-knowledge/SKILL.md": "6bea215321de21071b03ae5472cbb29d31b908f1d5e6a6c25896012607ada24e",
+    ".claude/skills/mindslice-knowledge/SKILL.md": "7ea1731b69cf8703f9b3df790478dbb46ed8349ed2984608ce4c50a812254fcb",
     ".claude/skills/mindslice-knowledge/templates/README.md": "1f9cbe1c0b0fe6f17386816c4698a0cc67dff649616f863830810adb2ee92b41",
     ".claude/skills/mindslice-knowledge/templates/architecture.md": "d5a56ce9fdb5b85df253186e1155b9c18f4eaac0b09f3f741e7cd919bd35a05f",
     ".claude/skills/mindslice-knowledge/templates/decision.md": "e9e7fa8f9522152100fdeb30d4bd746fe78eb16fec6527868a4ea40bbb2cf617",
@@ -12,7 +12,7 @@
     ".claude/skills/mindslice-knowledge/templates/overview.md": "d32fb7353ff4c1f94de106ffba9cc1ada793785bde75fd5cbd85fdc81a4a24bb",
     ".claude/skills/mindslice-knowledge/templates/system.md": "2c0a01ca0244dfaaef2cfec78d154732fb8bfaec66061e45634daf0d4cc29317",
     ".claude/skills/mindslice-knowledge/templates/testing.md": "e61de1221296b7dee39754f9ccd5cdb3619d185b7cbe85dc13685f33c510bfb4",
-    ".github/instructions/mindslice.instructions.md": "e3cfe7c5df851551f33b965b7d6e2425522ea7aa9bde2b9b62b5f452f5ca6017"
+    ".github/instructions/mindslice.instructions.md": "26d6227e87eed238ae3b137d70fcaf729cc34f6f59176e2c819d7dcd3c3504b6"
   },
   "hooks": true
 }
