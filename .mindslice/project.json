@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "projectId": "project_3e958aa4cb0e9e85f604bfe988a648c9",
-  "name": "Homebrew Tap",
+  "projectId": "project_b14ead02777810fe8880db8bbd194cb3",
+  "name": "homebrew-tap",
   "homebases": [
     {
-      "homebaseId": "hb_30a67d14fb0a67c050a832ba6fe82f35",
-      "name": "Mindslice Documentation"
+      "homebaseId": "hb_41e2b61eabd1418b685da22c60604386",
+      "name": "documentation"
     }
   ]
 }
