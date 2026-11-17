@@ -24,6 +24,13 @@ project instructions, README and relevant code, interfaces and tests; narrow
 deeper research after that survey.
 Report missing context and inaccessible evidence.
 
+Use optional project routing (purpose, responsibilities, boundaries,
+instructionPaths and tracker) to identify candidate and dependent repositories.
+Verify it against each resolved checkout's instructions, README and code;
+missing metadata means unknown, not permission to guess ownership or a tracker.
+Routing grants no access, cloning, execution or publishing rights. Follow the
+skill's routing fallback for older clients and services.
+
 This is guidance, not enforcement and grants no access. Do not bypass selection
 or edit generated context. After an application change, summarize it and ask
 whether the user wants to investigate and potentially update shared
