@@ -1,28 +1,28 @@
 class Mindslice < Formula
   desc "CLI and local service for Mindslice"
   homepage "https://github.com/mindsliceai/mindslice-releases"
-  url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.2.5/mindslice-cli_darwin_arm64.tar.gz"
-  sha256 "3cd35e3b80a09b580b03c0b0b12bd265592c3559d66c0a86c509a52c07345fea"
+  url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.3.0/mindslice-cli_darwin_arm64.tar.gz"
+  sha256 "7ab93caf02a2bf21e54989cd22fe79c2cebc652cfa7511967824c71d55b7b50d"
 
   on_macos do
     on_intel do
-      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.2.5/mindslice-cli_darwin_amd64.tar.gz"
-      sha256 "e528c17db4f3d27905ae17804a693159b9dff0cc92e9cab1abfa775b73863def"
+      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.3.0/mindslice-cli_darwin_amd64.tar.gz"
+      sha256 "016b5de441d22b9b8824b02f2c6e0174bcc3071905181f875efea84f6ebf65bf"
     end
     on_arm do
-      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.2.5/mindslice-cli_darwin_arm64.tar.gz"
-      sha256 "3cd35e3b80a09b580b03c0b0b12bd265592c3559d66c0a86c509a52c07345fea"
+      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.3.0/mindslice-cli_darwin_arm64.tar.gz"
+      sha256 "7ab93caf02a2bf21e54989cd22fe79c2cebc652cfa7511967824c71d55b7b50d"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.2.5/mindslice-cli_linux_amd64.tar.gz"
-      sha256 "776d4911557249b2f8b0dd101d238718660cade77471f663d045e247858a252d"
+      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.3.0/mindslice-cli_linux_amd64.tar.gz"
+      sha256 "0b3c62d4b435b0562a6cb36af0a4597ecde58bd44fad18864435b4ce58ae0770"
     end
     on_arm do
-      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.2.5/mindslice-cli_linux_arm64.tar.gz"
-      sha256 "55a54835a1a6d9dde2c749af855a0bc5006e3935e568b26d4f2162125da0672f"
+      url "https://github.com/mindsliceai/mindslice-releases/releases/download/v0.3.0/mindslice-cli_linux_arm64.tar.gz"
+      sha256 "83b547c4d0794b25ed2c8cb85f22edf1c3ae326e474b52ab91710daa65e8c484"
     end
   end
 
@@ -45,7 +45,7 @@ class Mindslice < Formula
     <<~EOS
       Run mindslice init to set up your knowledge and choose automatic startup.
       You can change startup at any time with mindslice settings.
-      After upgrading, restart an enabled service with brew services restart mindslice.
+      After upgrading, run mindslice service restart to start and verify the installed version.
     EOS
   end
 
