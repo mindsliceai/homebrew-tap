@@ -27,20 +27,21 @@ mindslice service start
 The service manages your homebase and project connections and keeps local
 context views up to date. It runs in the background, even after you close the
 terminal. Start it before using the setup commands below; stop it when needed
-with `mindslice service stop`.
+with `mindslice service stop`. For a Homebrew-managed service, stopping it also
+disables automatic startup; turn that back on with `mindslice settings`.
 
-### 2. Connect your knowledge
+### 2. Set up your homebase
 
 Run this from any directory:
 
 ```sh
-mindslice connect
+mindslice init /path/to/knowledge
 ```
 
-Choose an existing folder of knowledge, an empty folder to initialize, or a Git
-URL to clone. The prompts ask where the knowledge lives and guide you through
-any initialization or cloning. Use an absolute folder path if you are unsure;
-relative paths are resolved from your current directory.
+Choose an existing homebase to register, initialize a new one, or clone an
+approved Git URL. Prompts guide initialization and cloning; relative paths are
+resolved from your current directory. The supplied directory must already
+exist; when cloning, the CLI creates a new child directory inside it.
 
 This registers the homebase on your machine, not a particular application
 project. Keep it in its own folder, separate from your application code, so
