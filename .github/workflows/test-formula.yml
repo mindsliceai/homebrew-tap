@@ -19,22 +19,46 @@ jobs:
       matrix:
         os:
           - macos-latest
-          - ubuntu-latest
+          - ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Audit, install, and test formula
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           if [ "$RUNNER_OS" = "Linux" ]; then
             NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+            sudo apt-get update -qq
+            sudo apt-get install -y libgtk-4-1 libwebkitgtk-6.0-4
           fi
           brew tap-new --no-git mindsliceai/tap
           tap_path="$(brew --repository mindsliceai/tap)"
           mkdir -p "$tap_path/Formula"
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            git fetch --no-tags --depth=1 origin "$GITHUB_BASE_SHA"
+            git show FETCH_HEAD:Formula/mindslice.rb > "$RUNNER_TEMP/mindslice-previous.rb"
+            cp "$RUNNER_TEMP/mindslice-previous.rb" "$tap_path/Formula/mindslice.rb"
+            brew trust --formula mindsliceai/tap/mindslice
+            brew install mindsliceai/tap/mindslice
+          fi
           cp Formula/mindslice.rb "$tap_path/Formula/mindslice.rb"
           brew trust --formula mindsliceai/tap/mindslice
           brew audit --strict mindsliceai/tap/mindslice
-          brew install mindsliceai/tap/mindslice
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            brew upgrade mindsliceai/tap/mindslice
+          else
+            brew install mindsliceai/tap/mindslice
+          fi
           brew test mindsliceai/tap/mindslice
           mindslice --help
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            opt_prefix="$(brew --prefix mindsliceai/tap/mindslice)"
+            test -x "$opt_prefix/libexec/Mindslice/bin/mindslice"
+            test -x "$opt_prefix/libexec/Mindslice/bin/mindslice-desktop"
+            test "$("$opt_prefix/libexec/Mindslice/bin/mindslice-desktop" --version)" \
+              = "$(mindslice --version | sed 's/^mindslice //')"
+          fi
           brew uninstall --force mindsliceai/tap/mindslice

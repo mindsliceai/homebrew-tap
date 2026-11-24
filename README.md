@@ -16,6 +16,11 @@ On macOS or Linux, install the Mindslice CLI with Homebrew:
 brew install mindsliceai/tap/mindslice
 ```
 
+Starting with the first release that includes the Linux desktop bundle, the
+formula will also install `mindslice-desktop`; launch it from a graphical
+session. GTK 4 and WebKitGTK 6.0 are system runtime dependencies. The formula
+does not yet create a desktop menu entry or register graphical autostart.
+
 ### 1. Start the local service
 
 Run this from any directory:
